@@ -1,19 +1,23 @@
 package com.iremote.chatserver.netty.server.handler;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufUtil;
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.channel.group.ChannelGroup;
+import io.netty.channel.group.DefaultChannelGroup;
+import io.netty.util.concurrent.GlobalEventExecutor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-public class MessagePushHandler extends SimpleChannelInboundHandler<ByteBuf> {
+public class MessagePushHandler extends SimpleChannelInboundHandler<String> {
     private static Log log = LogFactory.getLog(MessagePushHandler.class);
 
+    public static final ChannelGroup group = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
+
     @Override
-    protected void channelRead0(ChannelHandlerContext channelHandlerContext, ByteBuf byteBuf) throws Exception {
+    protected void channelRead0(ChannelHandlerContext channelHandlerContext, String s) throws Exception {
         log.info(" Sever channel Read");
-        log.info(ByteBufUtil.hexDump(byteBuf.readBytes(byteBuf.readableBytes())));
+        log.info(s);
         channelHandlerContext.writeAndFlush("xixixixixix");
     }
 
@@ -27,7 +31,9 @@ public class MessagePushHandler extends SimpleChannelInboundHandler<ByteBuf> {
     @Override
     public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
         log.info(" Server channel userEventTriggered");
-        ctx.writeAndFlush("fsadfa");
+        for (Channel channel : group) {
+            channel.writeAndFlush("dadada jia hao");
+        }
     }
 
     @Override

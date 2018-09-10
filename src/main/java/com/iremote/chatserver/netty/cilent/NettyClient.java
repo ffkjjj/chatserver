@@ -49,6 +49,7 @@ public class NettyClient implements Runnable{
                 LogUtils.info("Connect to %s:%d", ip, port);
                 ChannelFuture f = b.connect(ip, port).sync();
                 f.channel().closeFuture().sync();
+                f.channel().writeAndFlush("xixixixhahah");
             } catch(InterruptedException e){
                 log.error(e.getMessage() , e);
                 break;
