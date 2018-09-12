@@ -1,5 +1,6 @@
 package com.iremote.chatserver.netty.server.handler;
 
+import com.iremote.chatserver.netty.cilent.handler.HeartBeatHandler;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -18,12 +19,18 @@ public class MessagePushHandler extends SimpleChannelInboundHandler<String> {
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, String s) throws Exception {
         log.info(" Sever channel Read");
         log.info(s);
-        channelHandlerContext.writeAndFlush("xixixixixix");
+        Integer count = channelHandlerContext.channel().attr(HeartBeatHandler.salt).get();
+        if (count > 5) {
+            channelHandlerContext.writeAndFlush("count > 5");
+        } else {
+            channelHandlerContext.channel().attr(HeartBeatHandler.salt).set(++count);
+        }
     }
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         super.channelActive(ctx);
+        ctx.channel().attr(HeartBeatHandler.salt).set(1);
         log.info("Sever channel active");
         ctx.writeAndFlush("hello client");
     }
