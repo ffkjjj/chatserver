@@ -10,10 +10,16 @@ import io.netty.util.concurrent.GlobalEventExecutor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import java.util.Map;
+import java.util.concurrent.*;
+
 public class MessagePushHandler extends SimpleChannelInboundHandler<String> {
     private static Log log = LogFactory.getLog(MessagePushHandler.class);
 
+    ThreadPoolExecutor executorService = new ThreadPoolExecutor(3, 4, 5, TimeUnit.SECONDS, new LinkedBlockingDeque<Runnable>());
+
     public static final ChannelGroup group = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
+    public static Map<Integer, Channel> channelMap = new ConcurrentHashMap<>();
 
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, String s) throws Exception {
@@ -22,6 +28,14 @@ public class MessagePushHandler extends SimpleChannelInboundHandler<String> {
         Integer count = channelHandlerContext.channel().attr(HeartBeatHandler.salt).get();
         if (count > 5) {
             channelHandlerContext.writeAndFlush("count > 5");
+            executorService.submit(() -> {
+                try {
+                    Thread.sleep(8000);
+                    MessagePushHandler.channelMap.get(123).writeAndFlush("wo xing le ...");
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            });
         } else {
             channelHandlerContext.channel().attr(HeartBeatHandler.salt).set(++count);
         }
@@ -33,6 +47,7 @@ public class MessagePushHandler extends SimpleChannelInboundHandler<String> {
         ctx.channel().attr(HeartBeatHandler.salt).set(1);
         log.info("Sever channel active");
         ctx.writeAndFlush("hello client");
+        MessagePushHandler.channelMap.put(123, ctx.channel());
     }
 
     @Override
@@ -41,6 +56,12 @@ public class MessagePushHandler extends SimpleChannelInboundHandler<String> {
         for (Channel channel : group) {
             channel.writeAndFlush("dadada jia hao");
         }
+    }
+
+    @Override
+    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+        super.channelInactive(ctx);
+        log.info("disconnection");
     }
 
     @Override
