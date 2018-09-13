@@ -33,7 +33,7 @@ public class NettyServer {
                     .childHandler(channelinitializer)
                     .childOption(ChannelOption.SO_KEEPALIVE, true);
 
-            channelfuture = sbs.bind(new InetSocketAddress(4399)).sync();
+            channelfuture = sbs.bind(new InetSocketAddress(port)).sync();
 //            Channel channel = sbs.bind(port).channel();
             channelfuture.channel().closeFuture().sync();
         } catch (Throwable t) {

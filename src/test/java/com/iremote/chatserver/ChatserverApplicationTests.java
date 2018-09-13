@@ -15,12 +15,9 @@ public class ChatserverApplicationTests {
 
 	@Test
 	public void contextLoads() {
-		NettyClient.startClient("127.0.0.1", 4399, new HeartBeatInitializer());
 	}
 
 	@Test
 	public void server(){
-		NettyServer nettyServer = new NettyServer(4399, new MessagePushInitializer());
-		nettyServer.start();
 	}
 }

@@ -41,7 +41,7 @@ public class NettyClient implements Runnable{
         b.group(workerGroup);
         b.channel(NioSocketChannel.class);
         b.option(ChannelOption.SO_KEEPALIVE, true);
-        b.remoteAddress(new InetSocketAddress("127.0.0.1", 4399));
+        b.remoteAddress(new InetSocketAddress(ip, port));
         b.handler(channelinitializer);
 
         for ( ;; ){
@@ -69,6 +69,6 @@ public class NettyClient implements Runnable{
     }
 
     public static void main(String[] args) {
-        NettyClient.startClient("127.0.0.1", 4399, new HeartBeatInitializer());
+        NettyClient.startClient("127.0.0.1", 8921, new HeartBeatInitializer());
     }
 }
