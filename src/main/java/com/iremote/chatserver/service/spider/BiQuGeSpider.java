@@ -1,4 +1,4 @@
-package ml.myll.web.service.spider;
+package com.iremote.chatserver.service.spider;
 
 import ml.myll.web.dao.BookDAO;
 import ml.myll.web.po.BookPO;

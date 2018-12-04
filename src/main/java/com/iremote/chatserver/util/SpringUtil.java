@@ -1,4 +1,4 @@
-package ml.myll.web.util;
+package com.iremote.chatserver.util;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
