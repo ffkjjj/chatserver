@@ -1,4 +1,4 @@
-package ml.myll.web.po;
+package com.iremote.chatserver.po;
 
 import org.hibernate.annotations.GenericGenerator;
 

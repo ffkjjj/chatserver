@@ -1,6 +1,6 @@
-package ml.myll.web.dao;
+package com.iremote.chatserver.dao;
 
-import ml.myll.web.po.BookPO;
+import com.iremote.chatserver.po.BookPO;
 import org.springframework.data.repository.CrudRepository;
 
 public interface BookDAO extends CrudRepository<BookPO, Integer>{
