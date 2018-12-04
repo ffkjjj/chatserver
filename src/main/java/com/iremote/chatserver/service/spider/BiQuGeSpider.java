@@ -1,8 +1,8 @@
 package com.iremote.chatserver.service.spider;
 
+import com.iremote.chatserver.util.SpringUtil;
 import ml.myll.web.dao.BookDAO;
 import ml.myll.web.po.BookPO;
-import ml.myll.web.util.SpringUtil;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;

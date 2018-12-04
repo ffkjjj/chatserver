@@ -29,7 +29,7 @@
     </appender>
 
     <logger name="jdbc.sqlonly" level="WARN" />
-    <logger name="jdbc.sqltiming" level="error" />
+    <logger name="jdbc.sqltiming" level="ERROR" />
     <logger name="jdbc.resultsettable" level="INFO" />
     <logger name="jdbc.resultset" level="WARN" />
     <logger name="jdbc.connection" level="WARN" />
