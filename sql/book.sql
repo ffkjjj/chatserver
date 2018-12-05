@@ -1,7 +1,7 @@
 CREATE TABLE `book` (
   `bookid` int(9) NOT NULL AUTO_INCREMENT,
   `bookname` varchar(64) NOT NULL,
-  `bookcontent` varchar(10240) DEFAULT NULL,
+  `bookcontent` varchar(20480) DEFAULT NULL,
   `bookwebid` varchar(128) DEFAULT NULL,
   `bookinternalid` int(9) NOT NULL,
   `chapterid` int(9) NOT NULL,
