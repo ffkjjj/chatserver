@@ -25,3 +25,5 @@ CREATE TABLE `globalparameter` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8
 
 INSERT INTO globalparameter(`key`, intvalue, strvalue) VALUES ("bookinternalid", 0, NULL );
+ ALTER TABLE `myll`.`globalparameter` CHANGE `key` `globalid` VARCHAR(128) CHARSET utf8 COLLATE utf8_general_ci NOT NULL;
+ALTER TABLE `myll`.`bookinfo` ADD COLUMN `bookname` VARCHAR(128) NULL AFTER `bookinternalid`;

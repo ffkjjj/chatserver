@@ -1,6 +1,5 @@
 package com.iremote.chatserver.util;
 
-import com.iremote.chatserver.ChatserverApplication;
 import com.iremote.chatserver.netty.server.NettyServer;
 import com.iremote.chatserver.netty.server.initializer.MessagePushInitializer;
 import org.apache.commons.logging.Log;

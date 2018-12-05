@@ -3,12 +3,17 @@ package com.iremote.chatserver;
 import com.iremote.chatserver.spider.BiQuGeSpider;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class ChatserverApplicationTests {
+public class ChatServerApplicationTests {
+	@Autowired
+	private BiQuGeSpider spider;
 
 	@Test
 	public void contextLoads() {
@@ -23,7 +28,11 @@ public class ChatserverApplicationTests {
 		String url = "https://www.xbiquge6.com";
 		String indexPage = "/32_32006/1702597.html";
 		Integer endPage = 1702985;
-		BiQuGeSpider spider = new BiQuGeSpider(url, indexPage, endPage);
+//		Integer endPage = 1702599;
+
+		spider.setUrl(url);
+		spider.setIndexPage(indexPage);
+		spider.setEndIndex(endPage);
 
 		spider.start();
 	}

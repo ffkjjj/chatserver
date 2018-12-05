@@ -10,14 +10,20 @@ public class GlobalParameterService {
     @Autowired
     private GlobalParameterDAO globalParameterDAO;
 
-    public void addIntValue(String key) {
-        GlobalParameterPO po = globalParameterDAO.findByKey(key);
+    public Integer addIntValue(String key) {
+        GlobalParameterPO po = globalParameterDAO.findByGlobalid(key);
         if (po == null) {
-            return;
+            return null;
         }
         if (po.getIntvalue() == null) {
             po.setIntvalue(0);
         }
         po.setIntvalue(po.getIntvalue() + 1);
+        return po.getIntvalue();
+    }
+
+    public Integer getIntValue(String key) {
+        GlobalParameterPO po = globalParameterDAO.findByGlobalid(key);
+        return po.getIntvalue();
     }
 }

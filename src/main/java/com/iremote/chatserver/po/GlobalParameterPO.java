@@ -2,24 +2,22 @@ package com.iremote.chatserver.po;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
+@Entity
+@Table(name="globalparameter")
 public class GlobalParameterPO {
-    private String key;
+    private String globalid;
     private Integer intvalue;
     private String strvalue;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @GenericGenerator(name = "generator", strategy = "increment")
-    public String getKey() {
-        return key;
+    public String getGlobalid() {
+        return globalid;
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    public void setGlobalid(String globalid) {
+        this.globalid = globalid;
     }
 
     public Integer getIntvalue() {

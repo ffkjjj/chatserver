@@ -1,6 +1,6 @@
-package ml.myll.web.dao;
+package com.iremote.chatserver.dao;
 
-import ml.myll.web.po.ContentPO;
+import com.iremote.chatserver.po.ContentPO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;

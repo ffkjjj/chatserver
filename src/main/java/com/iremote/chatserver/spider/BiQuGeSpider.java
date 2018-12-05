@@ -1,23 +1,32 @@
 package com.iremote.chatserver.spider;
 
-import com.iremote.chatserver.vo.BookVO;
+import com.iremote.chatserver.dao.BookDAO;
+import com.iremote.chatserver.dao.BookInfoDAO;
+import com.iremote.chatserver.po.BookInfoPO;
+import com.iremote.chatserver.po.BookPO;
+import com.iremote.chatserver.service.GlobalParameterService;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.Date;
 
+@Service
 public class BiQuGeSpider {
     private String url;
     private String indexPage;
     private Integer endIndex;
-
-    public BiQuGeSpider(String url, String indexPage, Integer endIndex) {
-        this.url = url;
-        this.indexPage = indexPage;
-        this.endIndex = endIndex;
-    }
+    @Autowired
+    private BookDAO bookDAO;
+    @Autowired
+    private BookInfoDAO bookInfoDAO;
+    @Autowired
+    private GlobalParameterService globalParameterService;
+    private Integer bookInternalId;
+    private static final String BOOK_INTERNAL_ID = "bookinternalid";
 
     private Document getDocument(String indexPage) {
         try {
@@ -37,8 +46,10 @@ public class BiQuGeSpider {
         if (this.endIndex == null) {
             return;
         }
-        Integer endIndex;
 
+        Integer endIndex;
+        int index = 1;
+        boolean isFirst = true;
         do {
             Document doc = getDocument(indexPage);
 
@@ -50,17 +61,50 @@ public class BiQuGeSpider {
             endIndex = getEndIndex(href);
             indexPage = href;
 
-            BookVO bookVO = new BookVO();
-            bookVO.setBookcontent(content.toString());
-            bookVO.setBookname(bookName);
-            bookVO.setBookwebid(href);
-            bookVO.setChaptername(partName);
-            bookVO.setCreatetime(new Date());
+            if (isFirst) {
+                String s = href.split("/")[1];
+                BookInfoPO bookInfo = bookInfoDAO.findByBookwebid(s);
+                if (bookInfo != null) {
+                    return;
+                } else {
+                    bookInternalId = globalParameterService.addIntValue(BOOK_INTERNAL_ID);
 
+                    BookInfoPO info = new BookInfoPO();
+                    info.setBookinternalid(bookInternalId);
+                    info.setBookwebid(s);
+                    info.setBookname(bookName);
+                    bookInfoDAO.save(info);
+                }
+                isFirst = false;
+            }
+
+            BookPO bookPO = new BookPO();
+            bookPO.setBookcontent(content.toString());
+            bookPO.setBookname(bookName);
+            bookPO.setBookwebid(href);
+            bookPO.setChaptername(partName);
+            bookPO.setCreatetime(new Date());
+            bookPO.setBookinternalid(bookInternalId);
+            bookPO.setChapterid(index);
+            bookDAO.save(bookPO);
+
+            index ++;
         } while (endIndex <= this.endIndex);
     }
 
     private Integer getEndIndex(String s){
         return Integer.valueOf(s.split("/")[2].split("\\.")[0]);
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public void setIndexPage(String indexPage) {
+        this.indexPage = indexPage;
+    }
+
+    public void setEndIndex(Integer endIndex) {
+        this.endIndex = endIndex;
     }
 }
