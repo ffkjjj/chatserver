@@ -1,10 +1,6 @@
 package com.iremote.chatserver;
 
-import com.iremote.chatserver.netty.cilent.NettyClient;
-import com.iremote.chatserver.netty.cilent.initializer.HeartBeatInitializer;
-import com.iremote.chatserver.netty.server.NettyServer;
-import com.iremote.chatserver.netty.server.initializer.MessagePushInitializer;
-import com.iremote.chatserver.service.spider.BiQuGeSpider;
+import com.iremote.chatserver.spider.BiQuGeSpider;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,9 +1,6 @@
-package com.iremote.chatserver.service.spider;
+package com.iremote.chatserver.spider;
 
-import com.iremote.chatserver.dao.BookDAO;
-import com.iremote.chatserver.util.SpringUtil;
-import com.iremote.chatserver.po.BookPO;
-import com.iremote.chatserver.util.SpringUtil;
+import com.iremote.chatserver.vo.BookVO;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -15,14 +12,11 @@ public class BiQuGeSpider {
     private String url;
     private String indexPage;
     private Integer endIndex;
-    private BookDAO bookDAO;
 
     public BiQuGeSpider(String url, String indexPage, Integer endIndex) {
         this.url = url;
         this.indexPage = indexPage;
         this.endIndex = endIndex;
-
-         bookDAO = SpringUtil.getBean(BookDAO.class);
     }
 
     private Document getDocument(String indexPage) {
@@ -56,14 +50,13 @@ public class BiQuGeSpider {
             endIndex = getEndIndex(href);
             indexPage = href;
 
-            BookPO bookPO = new BookPO();
-            bookPO.setBookcontent(content.toString());
-            bookPO.setBookname(bookName);
-            bookPO.setBookwebid(href);
-            bookPO.setChaptername(partName);
-            bookPO.setCreatetime(new Date());
+            BookVO bookVO = new BookVO();
+            bookVO.setBookcontent(content.toString());
+            bookVO.setBookname(bookName);
+            bookVO.setBookwebid(href);
+            bookVO.setChaptername(partName);
+            bookVO.setCreatetime(new Date());
 
-            bookDAO.save(bookPO);
         } while (endIndex <= this.endIndex);
     }
 

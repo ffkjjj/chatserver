@@ -12,6 +12,8 @@ public class BookPO {
     private String bookname;
     private String bookcontent;
     private String bookwebid;
+    private Integer bookinternalid;
+    private Integer chapterid;
     private String chaptername;
     private Date createtime;
 
@@ -64,5 +66,21 @@ public class BookPO {
 
     public void setChaptername(String chaptername) {
         this.chaptername = chaptername;
+    }
+
+    public Integer getBookinternalid() {
+        return bookinternalid;
+    }
+
+    public void setBookinternalid(Integer bookinternalid) {
+        this.bookinternalid = bookinternalid;
+    }
+
+    public Integer getChapterid() {
+        return chapterid;
+    }
+
+    public void setChapterid(Integer chapterid) {
+        this.chapterid = chapterid;
     }
 }
