@@ -65,7 +65,7 @@ public class BiQuGeSpider {
                 String s = href.split("/")[1];
                 BookInfoPO bookInfo = bookInfoDAO.findByBookwebid(s);
                 if (bookInfo != null) {
-                    return;
+                    bookInternalId = bookInfo.getBookinternalid();
                 } else {
                     bookInternalId = globalParameterService.addIntValue(BOOK_INTERNAL_ID);
 

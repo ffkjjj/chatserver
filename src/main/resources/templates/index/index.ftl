@@ -26,22 +26,23 @@
         },
         mounted() {
             axios
-                    .get('getbook', {params: {'index': this.index}})
+                    .get('book/getbook', {params: {'index': this.index}})
                     .then(response => (this.message = response.data))
         },
         methods:{
             changeIndex: function() {
                 axios
-                        .get('getbook', {params: {'index': this.index}})
+                        .get('book/getbook', {params: {'index': this.index}})
                         .then(response => (this.message = response.data))
                 window.localStorage.setItem("index", this.index)
             },
             plusIndex: function() {
                 this.index = Number(this.index) + 1
                 axios
-                        .get('getbook', {params: {'index': this.index}})
+                        .get('book/getbook', {params: {'index': this.index}})
                         .then(response => (this.message = response.data))
                 window.localStorage.setItem("index", this.index)
+                scrollTo(0,0);
             },
         }
     })

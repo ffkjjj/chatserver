@@ -25,15 +25,15 @@ public class ChatServerApplicationTests {
 
 	@Test
 	public void testSpider(){
-		String url = "https://www.xbiquge6.com";
-		String indexPage = "/32_32006/1702597.html";
-		Integer endPage = 1702985;
+		/*String url = "https://www.xbiquge6.com";
+		String indexPage = "/7_7254/8048699.html";
+		Integer endPage = 8245898;
 //		Integer endPage = 1702599;
 
 		spider.setUrl(url);
 		spider.setIndexPage(indexPage);
 		spider.setEndIndex(endPage);
 
-		spider.start();
+		spider.start();*/
 	}
 }
